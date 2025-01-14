@@ -1,0 +1,23 @@
+{
+  "name": "@signver/reform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Chua Siang Poh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/signver/reform"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
