@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "target": "ESNext",
+        "jsx": "preserve",
+        "jsxFactory": "React.createElement",
+        "jsxFragmentFactory": "React.Fragment",
+        "jsxImportSource": "react",
+        "reactNamespace": "React"
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "**/*"
+    ]
+}
