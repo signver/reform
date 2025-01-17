@@ -4,25 +4,25 @@ export interface IReformInputValidationError {
   reason: string;
 }
 
-export interface IUseReformInput<Data, Name extends keyof Data> {
-  (name: Name, options?: {
-    defaultValue?: {
-        (): Data[Name]
-    }
-    equals?: {
-        (a: Data[Name], b: Data[Name]): boolean
-    }
-    valid?: {
-        (value: Data[Name]): IReformInputValidationError[] | null | undefined
-    }
-  }): [
-    Data[Name],
-    {
-      (computeNext: { (current: Data[Name]): Data[Name] }): void;
-    },
-    IReformInputValidationError[] | null | undefined
-  ];
+export interface IUseReformInputOptions<Value> {
+  defaultValue?: {
+    (): Value;
+  };
+  equals?: {
+    (a: Value, b: Value): boolean;
+  };
+  valid?: {
+    (value: Value): IReformInputValidationError[] | null | undefined;
+  };
 }
+
+export type IUseReformInput<Data, Name extends keyof Data = keyof Data> = [
+  Data[Name],
+  {
+    (computeNext: { (current: Data[Name]): Data[Name] }): void;
+  },
+  IReformInputValidationError[] | null | undefined
+];
 
 export interface IUseReformOptions<
   Data extends Record<string | number, unknown>
@@ -33,6 +33,24 @@ export interface IUseReformOptions<
 export type TUseReform<Data extends Record<string | number, unknown>> = [
   Data,
   {
-    useInput: IUseReformInput<Data, keyof Data>;
+    useInput: {
+      <Name extends keyof Data = keyof Data>(
+        name: Name,
+        options?: {
+          defaultValue?: {
+            (): Data[typeof name];
+          };
+          equals?: {
+            (a: Data[typeof name], b: Data[typeof name]): boolean;
+          };
+          valid?: {
+            (value: Data[typeof name]):
+              | IReformInputValidationError[]
+              | null
+              | undefined;
+          };
+        }
+      ): IUseReformInput<Data, typeof name>;
+    };
   }
 ];

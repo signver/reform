@@ -1,38 +1,54 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IUseReformInput, IUseReformOptions, TUseReform } from "./types";
+import {
+  IReformInputValidationError,
+  IUseReformInput,
+  IUseReformInputOptions,
+  IUseReformOptions,
+  TUseReform,
+} from "./types";
 
 export function useReformState<Data extends Record<string | number, unknown>>({
   initialState,
 }: IUseReformOptions<Data>): TUseReform<Data> {
   const [data, setData] = useState(initialState);
+  const [validation, setValidation] =
+    useState<Record<keyof Data, IReformInputValidationError[]>>();
 
   return [
     data,
     {
-      useInput<Name extends keyof Data>(name: Name, { defaultValue, equals, valid }) {
+      useInput<Name extends keyof Data>(
+        name: Name,
+        options: IUseReformInputOptions<Data[typeof name]>
+      ) {
         const value = useMemo(() => data[name], [data, name]);
-        const validationMessages = useMemo(
-          () => valid?.(value),
-          [valid, value]
-        );
         useEffect(() => {
-          if (!defaultValue) return;
+          if (!options?.defaultValue) return;
           if (!!value) return;
-          setData((current) => ({ ...current, [name]: defaultValue() }));
-        }, [defaultValue, value]);
-        const setValue: ReturnType<IUseReformInput<Data, Name>>['1'] = useCallback(
+          setData((current) => ({
+            ...current,
+            [name]: options.defaultValue(),
+          }));
+        }, [options?.defaultValue, value]);
+        const setValue: IUseReformInput<Data, Name>["1"] = useCallback(
           (computeNext) => {
             const next = computeNext(value);
-            const isEqual = !!equals ? equals(next, value) : next === value;
+            const isEqual = !!options?.equals
+              ? options.equals(next, value)
+              : next === value;
             if (isEqual) return;
             setData((current) => ({
               ...current,
               [name]: next,
             }));
+            setValidation((current) => ({
+              ...current,
+              [name]: options?.valid(next),
+            }));
           },
-          [equals, name, value]
+          [options?.equals, name, value]
         );
-        return [value, setValue, validationMessages];
+        return [value, setValue, validation?.[name]];
       },
     },
   ];
