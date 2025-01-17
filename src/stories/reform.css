@@ -1,0 +1,25 @@
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+  row-gap: 1em;
+}
+
+label {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+  row-gap: 0.25em;
+  font-family: sans-serif;
+}
+
+label header {
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+label footer {
+  font-size: 0.725em;
+  line-height: 1em;
+  color: crimson;
+}
