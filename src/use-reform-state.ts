@@ -13,7 +13,6 @@ export function useReformState<Data extends Record<string | number, unknown>>({
   const [data, setData] = useState(initialState);
   const [validation, setValidation] =
     useState<Record<keyof Data, IReformInputValidationError[]>>();
-
   return [
     data,
     {

@@ -8,6 +8,8 @@ export function ReformProvider<T extends Record<string, unknown>>({
 }: PropsWithChildren<{
   defaultValue: { (): T };
 }>) {
-  const reform = useReformState({ initialState: defaultValue });
+  const reform = useReformState({
+    initialState: defaultValue,
+  });
   return <Reform.Provider value={reform}>{children}</Reform.Provider>;
 }
