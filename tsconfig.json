@@ -1,17 +1,11 @@
 {
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "target": "ESNext",
-        "jsx": "preserve",
-        "jsxImportSource": "react",
-        "reactNamespace": "React"
-    },
-    "exclude": [
-        "node_modules"
-    ],
-    "include": [
-        "**/*"
-    ]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*"]
 }
